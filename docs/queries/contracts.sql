@@ -34,3 +34,21 @@ WHERE i.id IS NULL;
 -- 6. Clean the data while testing (careful: it deletes everything)
 -- DELETE FROM installments;
 -- DELETE FROM contracts;
+
+-- 7. Did the last request leave a contract behind? (v3, all or nothing)
+-- After a request that failed halfway, no new contract should appear here.
+SELECT * FROM contracts ORDER BY id DESC;
+
+-- 8. Contracts without installments (extension 4a)
+-- Same as query 5: it must always return 0 rows.
+SELECT c.id
+FROM contracts c
+LEFT JOIN installments i ON i.contract_id = c.id
+WHERE i.id IS NULL;
+
+-- 9. Installments left behind (v3, all or nothing)
+-- Every contract has `term_months` installments, so the total must be the sum
+-- of the terms of all contracts. If it is higher, a failed request left
+-- installments without a contract.
+SELECT (SELECT COUNT(*) FROM installments)     AS installments,
+       (SELECT SUM(term_months) FROM contracts) AS expected;
