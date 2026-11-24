@@ -80,6 +80,18 @@ class ContractControllerTest {
 	}
 
 	@Test
+	void previewRefusesATermOfZeroLikeIssueDoes() throws Exception {
+		mockMvc.perform(post("/contracts/preview").contentType(MediaType.APPLICATION_JSON)
+				.content("""
+						{"farmer":"Joao","amount":10000,"termMonths":0,"monthlyRate":0.02}
+						"""))
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("$.fields.termMonths").exists());
+
+		verifyNoInteractions(service);
+	}
+
+	@Test
 	void listsTheContracts() throws Exception {
 		var contract = new Contract();
 		contract.setFarmer("Joao");
