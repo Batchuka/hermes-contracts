@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.github.batchuka.hermes.contracts.model.Contract;
 import io.github.batchuka.hermes.contracts.service.ContractService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/contracts")
@@ -19,7 +20,12 @@ public class ContractController {
 	}
 
 	@PostMapping
-	public Contract create(@RequestBody Contract contract) {
+	public Contract create(@Valid @RequestBody ContractRequest request) {
+		Contract contract = new Contract();
+		contract.setFarmer(request.farmer());
+		contract.setAmount(request.amount());
+		contract.setTermMonths(request.termMonths());
+		contract.setMonthlyRate(request.monthlyRate());
 		return service.issue(contract);
 	}
 
