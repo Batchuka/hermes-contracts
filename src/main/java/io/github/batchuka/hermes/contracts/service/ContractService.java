@@ -19,8 +19,7 @@ public class ContractService {
 		this.repository = repository;
 	}
 
-	@Transactional
-	public Contract issue(Contract contract) {
+	public Contract preview(Contract contract) {
 		BigDecimal payment = ScheduleCalculator.installment(
 				contract.getAmount(),
 				contract.getMonthlyRate(),
@@ -33,7 +32,12 @@ public class ContractService {
 			contract.getSchedule().add(item);
 		}
 
-		return repository.save(contract);
+		return contract;
+	}
+
+	@Transactional
+	public Contract issue(Contract contract) {
+		return repository.save(preview(contract));
 	}
 
 	public List<Contract> list() {
