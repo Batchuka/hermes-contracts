@@ -1,4 +1,4 @@
-package io.github.batchuka.hermes.contracts.contracts;
+package io.github.batchuka.hermes.contracts;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
