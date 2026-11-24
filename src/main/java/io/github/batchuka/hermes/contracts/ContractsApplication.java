@@ -1,4 +1,4 @@
-package io.github.batchuka.hermes.contracts.contracts;
+package io.github.batchuka.hermes.contracts;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
