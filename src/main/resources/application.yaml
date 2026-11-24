@@ -3,3 +3,12 @@ server:
 spring:
   application:
     name: contracts
+  datasource:
+    url: jdbc:mysql://localhost:3306/contracts
+    username: contracts
+    password: contracts
+  flyway:
+    baseline-on-migrate: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
