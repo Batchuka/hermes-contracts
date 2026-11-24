@@ -35,12 +35,21 @@ public class ContractController {
 
 	@PostMapping
 	public Contract create(@Valid @RequestBody ContractRequest request) {
+		return service.issue(toContract(request));
+	}
+
+	@PostMapping("/preview")
+	public Contract preview(@Valid @RequestBody ContractRequest request) {
+		return service.preview(toContract(request));
+	}
+
+	private Contract toContract(ContractRequest request) {
 		Contract contract = new Contract();
 		contract.setFarmer(request.farmer());
 		contract.setAmount(request.amount());
 		contract.setTermMonths(request.termMonths());
 		contract.setMonthlyRate(request.monthlyRate());
-		return service.issue(contract);
+		return contract;
 	}
 
 }
