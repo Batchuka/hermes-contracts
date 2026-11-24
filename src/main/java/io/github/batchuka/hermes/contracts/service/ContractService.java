@@ -1,6 +1,7 @@
 package io.github.batchuka.hermes.contracts.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,8 +33,15 @@ public class ContractService {
 			contract.getSchedule().add(item);
 		}
 
-		Contract saved = repository.save(contract);
-		return saved;
+		return repository.save(contract);
+	}
+
+	public List<Contract> list() {
+		return repository.findAll();
+	}
+
+	public Contract find(Long id) {
+		return repository.findById(id).orElseThrow(() -> new ContractNotFoundException(id));
 	}
 
 }

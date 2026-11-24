@@ -1,5 +1,9 @@
 package io.github.batchuka.hermes.contracts.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +21,16 @@ public class ContractController {
 
 	public ContractController(ContractService service) {
 		this.service = service;
+	}
+
+	@GetMapping
+	public List<Contract> list() {
+		return service.list();
+	}
+
+	@GetMapping("/{id}")
+	public Contract get(@PathVariable Long id) {
+		return service.find(id);
 	}
 
 	@PostMapping

@@ -9,6 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import io.github.batchuka.hermes.contracts.service.ContractNotFoundException;
+
 @RestControllerAdvice
 public class ApiExceptionHandler {
 
@@ -19,6 +21,11 @@ public class ApiExceptionHandler {
 		e.getFieldErrors().forEach(error -> fields.put(error.getField(), error.getDefaultMessage()));
 		problem.setProperty("fields", fields);
 		return problem;
+	}
+
+	@ExceptionHandler(ContractNotFoundException.class)
+	public ProblemDetail handleNotFound(ContractNotFoundException e) {
+		return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
 	}
 
 }
