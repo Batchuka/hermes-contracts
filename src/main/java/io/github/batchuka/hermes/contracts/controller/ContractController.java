@@ -24,11 +24,11 @@ public class ContractController {
 
 	@PostMapping
 	public Contract create(@RequestBody Contract contract) {
-		double payment = ScheduleCalculator.installment(
-				contract.getAmount().doubleValue(),
-				contract.getMonthlyRate().doubleValue(),
+		BigDecimal payment = ScheduleCalculator.installment(
+				contract.getAmount(),
+				contract.getMonthlyRate(),
 				contract.getTermMonths());
-		contract.setInstallment(BigDecimal.valueOf(payment));
+		contract.setInstallment(payment);
 
 		for (Installment item : ScheduleCalculator.schedule(
 				contract.getAmount(), contract.getMonthlyRate(), contract.getTermMonths())) {
